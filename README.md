@@ -1,25 +1,28 @@
-import math
-
-def calcular_trayectoria():
-    print("--- Calculadora de Proyectiles ---")
+def calcular_ciclo_carnot():
+    print("--- Calculadora de Eficiencia de Carnot ---")
+    
     # Entrada de datos
-    v0 = float(input("Ingresa la velocidad inicial (m/s): "))
-    angulo_grados = float(input("Ingresa el ángulo de lanzamiento (grados): "))
+    t_celsius_h = float(input("Temperatura fuente caliente (°C): "))
+    t_celsius_l = float(input("Temperatura fuente fría (°C): "))
+    trabajo_deseado = float(input("Trabajo útil deseado (Joules): "))
     
-    # Conversión a radianes para las funciones trigonométricas
-    theta = math.radians(angulo_grados)
-    g = 9.81
+    # Conversión a Kelvin
+    t_h = t_celsius_h + 273.15
+    t_l = t_celsius_l + 273.15
     
+    # Validar que sea un ciclo posible
+    if t_h <= t_l:
+        print("Error: La fuente caliente debe estar a mayor temperatura que la fría.")
+        return
+
     # Cálculos
-    tiempo_vuelo = (2 * v0 * math.sin(theta)) / g
-    altura_max = (v0**2 * (math.sin(theta)**2)) / (2 * g)
-    alcance = (v0**2 * math.sin(2 * theta)) / g
+    eficiencia = 1 - (t_l / t_h)
+    q_h = trabajo_deseado / eficiencia
     
     # Resultados
     print(f"\nResultados:")
-    print(f"Tiempo de vuelo: {tiempo_vuelo:.2f} s")
-    print(f"Altura máxima: {altura_max:.2f} m")
-    print(f"Alcance horizontal: {alcance:.2f} m")
+    print(f"Eficiencia teórica: {eficiencia * 100:.2f} %")
+    print(f"Calor requerido (Qh): {q_h:.2f} Joules")
 
 if __name__ == "__main__":
-    calcular_trayectoria()
+    calcular_ciclo_carnot()
